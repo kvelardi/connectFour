@@ -5,8 +5,8 @@
  * board fills (tie)
  */
 
-let WIDTH = 7;
-let HEIGHT = 6;
+const WIDTH = 7;
+const HEIGHT = 6;
 
 let currPlayer = 1; // active player: 1 or 2
 let board = []; // array of rows, each row is array of cells  (board[y][x])
@@ -17,14 +17,19 @@ let board = []; // array of rows, each row is array of cells  (board[y][x])
 
 function makeBoard() {
   // TODO: set "board" to empty HEIGHT x WIDTH matrix array
+  for (let y =0; y < HEIGHT; y++){
+    board.push(Array.from ({length: WIDTH}));
+  }
 }
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
 
 function makeHtmlBoard() {
   // TODO: get "htmlBoard" variable from the item in HTML w/ID of "board"
+  const htmlBoard = document.querySelector("#board");
 
   // TODO: add comment for this code
+  // creating the top row to be clickable 
   let top = document.createElement("tr");
   top.setAttribute("id", "column-top");
   top.addEventListener("click", handleClick);
@@ -37,14 +42,15 @@ function makeHtmlBoard() {
   htmlBoard.append(top);
 
   // TODO: add comment for this code
+  //create the blank main game board to be played on
   for (let y = 0; y < HEIGHT; y++) {
     const row = document.createElement("tr");
     for (let x = 0; x < WIDTH; x++) {
       const cell = document.createElement("td");
-      cell.setAttribute("id", `${y}-${x}`);
-      row.append(cell);
+      cell.setAttribute("id", `${y}-${x}`);//sets cell ID with y/x values
+      row.append(cell); //adds cell to the row
     }
-    htmlBoard.append(row);
+    htmlBoard.append(row); //updates the board in that row
   }
 }
 
@@ -52,13 +58,23 @@ function makeHtmlBoard() {
 
 function findSpotForCol(x) {
   // TODO: write the real version of this, rather than always returning 0
-  return 0;
+  for (let y= HEIGHT -1; y >= 0; y--){
+    if (!board [y][x]){
+      return y;
+    }
+  }
+  return null;
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
 
 function placeInTable(y, x) {
   // TODO: make a div and insert into correct table cell
+  const piece = document.createElement('div');
+  piece.classList.add ("piece"); //adding game piece to the gameboard
+  piece.classList.add (`p${currPlayer}`);
+  const dot = document.getElementById (`${y}-${x}`);
+  dot.append (piece);
 }
 
 /** endGame: announce game end */
