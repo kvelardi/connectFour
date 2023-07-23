@@ -73,14 +73,15 @@ function placeInTable(y, x) {
   const piece = document.createElement('div');
   piece.classList.add ("piece"); //adding game piece to the gameboard
   piece.classList.add (`p${currPlayer}`);
-  const dot = document.getElementById (`${y}-${x}`);
-  dot.append (piece);
+  const dot = document.getElementById (`${y}-${x}`); //create the dot
+  dot.append (piece); //add the "dot" to the board
 }
 
 /** endGame: announce game end */
 
 function endGame(msg) {
   // TODO: pop up alert message
+  alert (msg); //can this be changed to an arrow fx?//
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -97,6 +98,7 @@ function handleClick(evt) {
 
   // place piece in board and add to HTML table
   // TODO: add line to update in-memory board
+  board [y][x]= currPlayer;
   placeInTable(y, x);
 
   // check for win
@@ -106,9 +108,13 @@ function handleClick(evt) {
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
+  if (board.every(row => row.every(cell =>cell))){
+    return endGame ("No one wins! It's a tie!!")
+  }
 
   // switch players
   // TODO: switch currPlayer 1 <-> 2
+  currPlayer = currPlayer === 1 ? 2 : 1;
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
@@ -133,13 +139,36 @@ function checkForWin() {
 
   for (let y = 0; y < HEIGHT; y++) {
     for (let x = 0; x < WIDTH; x++) {
-      let horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
-      let vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];
-      let diagDR = [[y, x], [y + 1, x + 1], [y + 2, x + 2], [y + 3, x + 3]];
-      let diagDL = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
+      //checking to see if there are any possible connect fours
+      
+      let horiz = [ //horizontal Left and Right)//
+        [y, x], 
+        [y, x + 1], 
+        [y, x + 2], 
+        [y, x + 3]
+      ];
+
+      let vert = [ //vertical (up and down)//
+        [y, x],
+        [y + 1, x], 
+        [y + 2, x], 
+        [y + 3, x]
+      ];
+      let diagDR = [ //diagonalRight//
+        [y, x], 
+        [y + 1, x + 1], 
+        [y + 2, x + 2], 
+        [y + 3, x + 3]
+      ];
+      let diagDL = [  //diagonalLeft//
+        [y, x], 
+        [y + 1, x - 1], 
+        [y + 2, x - 2], 
+        [y + 3, x - 3]
+      ];
 
       if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
-        return true;
+        return true;  //if (horiz OR vert OR diagDR OR diagDL) become true, then return _win(cells) is true//
       }
     }
   }
