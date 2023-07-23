@@ -1,1 +1,2 @@
 # connectFour
+Hi.  Here is a connect four game I was tasked with completing the code structure.  In this assignment we focused on DOM manipulation, ES 2015, and making comments to code already written for others to understand.  This is one of the first major projects I have worked on.
