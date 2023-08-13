@@ -4,7 +4,7 @@
  * column until a player gets four-in-a-row (horiz, vert, or diag) or until
  * board fills (tie)
  */
-
+//sets the width and height of the grid for the game
 const WIDTH = 7;
 const HEIGHT = 6;
 
@@ -17,6 +17,7 @@ let board = []; // array of rows, each row is array of cells  (board[y][x])
 
 function makeBoard() {
   // TODO: set "board" to empty HEIGHT x WIDTH matrix array
+  //this function is creates the game board 
   for (let y =0; y < HEIGHT; y++){
     board.push(Array.from ({length: WIDTH}));
   }
@@ -42,7 +43,7 @@ function makeHtmlBoard() {
   htmlBoard.append(top);
 
   // TODO: add comment for this code
-  //create the blank main game board to be played on
+  //*create the blank main game board to be played on
   for (let y = 0; y < HEIGHT; y++) {
     const row = document.createElement("tr");
     for (let x = 0; x < WIDTH; x++) {
